@@ -20,6 +20,19 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+def init_db():
+    conn = get_db_connection()
+    with conn:
+        conn.execute('''
+        CREATE TABLE IF NOT EXISTS passwords (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            website TEXT NOT NULL,
+            username TEXT NOT NULL,
+            password TEXT NOT NULL
+        )
+        ''')
+    conn.close()
+
 def generate_passphrase(num_words=4):
     wordlist = [
         'apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape', 'honeydew',
@@ -55,6 +68,9 @@ def derive_key_from_passphrase(passphrase, salt):
     )
     key = urlsafe_b64encode(kdf.derive(passphrase.encode()))
     return key
+
+# Initialize the database
+init_db()
 
 # Generate and save the passphrase and salt if they don't exist
 passphrase, salt = load_passphrase_and_salt()
