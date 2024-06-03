@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Password Manager</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #1c1c1c; 
+            color: #f1f1f1; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        h1 {
+            text-align: center;
+            color: #9370DB;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            background-color: #2c2c2c;
+            animation: fadeIn 1s ease-in;
+        }
+        th, td { 
+            padding: 15px; 
+            border: 1px solid #444; 
+        }
+        th { 
+            background-color: #9370DB; 
+        }
+        td { 
+            text-align: center; 
+        }
+        a { 
+            color: #9370DB; 
+            text-decoration: none; 
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .add-button { 
+            display: block; 
+            margin-top: 20px; 
+            text-align: center; 
+        }
+        .add-button a { 
+            background-color: #9370DB; 
+            color: white; 
+            padding: 10px 20px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            transition: background-color 0.3s ease;
+        }
+        .add-button a:hover {
+            background-color: #6A5ACD;
+        }
+        .reveal-button { 
+            cursor: pointer; 
+            color: #9370DB; 
+            background: none; 
+            border: none; 
+            font-size: 18px; 
+            transition: transform 0.2s ease;
+        }
+        .reveal-button:hover { 
+            transform: scale(1.1);
+        }
+        .action-buttons a {
+            margin-right: 10px;
+        }
+        .action-buttons a.edit-button {
+            color: #9370DB;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0; 
+                transform: translateY(-20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+    </style>
+    <script>
+        function togglePassword(id) {
+            var passwordField = document.getElementById('password-' + id);
+            var eyeIcon = document.getElementById('eye-' + id);
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.textContent = '🙈';
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.textContent = '👁️';
+            }
+        }
+        function toggleUsername(id) {
+            var usernameField = document.getElementById('username-' + id);
+            var eyeIcon = document.getElementById('eye-username-' + id);
+            if (usernameField.type === 'password') {
+                usernameField.type = 'text';
+                eyeIcon.textContent = '🙈';
+            } else {
+                usernameField.type = 'password';
+                eyeIcon.textContent = '👁️';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Password Manager</h1>
+    <table>
+        <tr>
+            <th>Website</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Actions</th>
+        </tr>
+        {% for password in passwords %}
+        <tr>
+            <td>{{ password.website }}</td>
+            <td>
+                <input type="password" value="{{ password.username }}" id="username-{{ password.id }}" readonly>
+                <button class="reveal-button" id="eye-username-{{ password.id }}" onclick="toggleUsername('{{ password.id }}')">👁️</button>
+            </td>
+            <td>
+                <input type="password" value="{{ decrypt_password(password.password) }}" id="password-{{ password.id }}" readonly>
+                <button class="reveal-button" id="eye-{{ password.id }}" onclick="togglePassword('{{ password.id }}')">👁️</button>
+            </td>
+            <td class="action-buttons">
+                <a href="{{ url_for('edit', id=password.id) }}" class="edit-button">Edit</a>
+                <a href="{{ url_for('delete', id=password.id) }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="add-button">
+        <a href="{{ url_for('add') }}">Add New Password</a>
+    </div>
+</body>
+</html>
