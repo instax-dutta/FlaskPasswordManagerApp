@@ -2,3 +2,6 @@ passwords.db
 secret.key
 passphrase.txt
 /flask_session
+passguard.spec
+/build 
+/dist
