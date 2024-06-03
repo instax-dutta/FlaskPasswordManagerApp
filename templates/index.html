@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Password Manager</title>
+    <title>PassGuard - By Racer OP</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -95,6 +95,7 @@
             width: 80%;
             max-width: 400px;
             border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
         }
         .close {
             color: #aaaaaa;
@@ -119,6 +120,8 @@
             border: 1px solid #444;
             background-color: #3c3c3c;
             color: #fff;
+            font-size: 16px;
+            box-sizing: border-box;
         }
         .modal input[type="submit"] {
             background-color: #9370DB;
@@ -128,9 +131,35 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
         .modal input[type="submit"]:hover {
             background-color: #6A5ACD;
+        }
+        input[type="password"] {
+            border: none;
+            background-color: #3c3c3c;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            padding: 10px;
+            width: calc(100% - 40px);
+            box-sizing: border-box;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0; 
+                transform: translateY(-20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
     </style>
     <script>
@@ -174,7 +203,7 @@
     </script>
 </head>
 <body>
-    <h1>Password Manager</h1>
+    <h1>PassGuard - By Racer OP</h1>
     <table>
         <tr>
             <th>Website</th>
