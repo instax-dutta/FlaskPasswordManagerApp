@@ -1,143 +1,98 @@
-# PassGuard - By Racer OP
+# PassGuard - By RacerOP
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [API Endpoints](#api-endpoints)
-- [Database Initialization](#database-initialization)
-- [Security](#security)
-- [Future Enhancements](#future-enhancements)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Introduction
-PassGuard is a secure password manager built with Flask that allows users to store, retrieve, and manage their passwords securely. It uses encryption to protect stored passwords and requires a passphrase for various operations, ensuring that your sensitive information remains protected.
+PassGuard is a secure and user-friendly password manager application built using Flask. This application stores your passwords securely and allows you to access them with ease. The passwords are encrypted using a passphrase that is generated and stored securely.
 
 ## Features
-- **Secure Storage**: Passwords are encrypted using strong encryption algorithms.
-- **Passphrase Protection**: A user-defined passphrase is required to access, add, edit, or delete passwords.
-- **User-Friendly Interface**: A clean and intuitive web interface for managing passwords.
-- **Dark Mode**: A sleek dark theme to reduce eye strain.
-- **Hidden Storage**: Sensitive files are stored in a hidden directory to enhance security.
+
+- **Add New Password**: Add a new password with website, username, and password fields.
+- **View Passwords**: View your stored passwords. Passwords are hidden by default and can be revealed by entering the passphrase.
+- **Edit Passwords**: Edit the details of an existing password entry.
+- **Delete Passwords**: Delete an existing password entry.
+- **Secure Passphrase**: Uses a generated passphrase to encrypt and decrypt passwords.
+- **Automatic Hide**: Passwords are automatically hidden again after 20 seconds.
 
 ## Installation
-### Prerequisites
-- Python 3.6 or higher
-- `pip` (Python package installer)
 
-### Clone the Repository
-```bash
-git clone https://github.com/instax-dutta/FlaskPasswordManagerApp.git
-cd FlaskPasswordManagerApp
-```
+1. **Clone the Repository**
 
-### Install Dependencies
-```bash
-pip install -r requirements.txt
-```
+    ```sh
+    git clone https://github.com/instax-dutta/FlaskPasswordManagerApp.git
+    cd FlaskPasswordManagerApp
+    ```
 
-### Initialize the Database
-The database is automatically initialized when you first run the application. If you need to manually initialize the database, follow these steps:
-1. Ensure the `.hidden` directory exists.
-2. Run the application once to trigger database creation.
+2. **Install Dependencies**
 
-## Usage
-### Running the Application
-Start the Flask application using the following command:
-```bash
+    Ensure you have Python installed. Then, install the required packages:
+
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+3. **Setup the Database**
+
+    Initialize the database:
+
+    ```sh
+    python app.py
+    ```
+
+    This will create the necessary database file and generate a passphrase if it doesn't already exist.
+
+## Running the Application
+
+To run the application, execute:
+
+```sh
 python app.py
 ```
-The application will be available at `http://127.0.0.1:7777`.
 
-### Accessing the Application
-1. Open a web browser and navigate to `http://127.0.0.1:7777`.
-2. Enter the passphrase to log in. The passphrase is stored in the `passphrase.txt` file in the root directory.
+The application will start and you will see a popup message indicating that the password manager is running on `localhost:7777`. Open your web browser and go to:
 
-### Managing Passwords
-- **Add Password**: Click on "Add New Password" and fill in the details.
-- **Edit Password**: Click on the "Edit" button next to a password entry, enter the passphrase, and update the details.
-- **Delete Password**: Click on the "Delete" button next to a password entry and confirm by entering the passphrase.
-
-## Project Structure
-```plaintext
-PassGuard/
-│
-├── .hidden/
-│   └── passwords.db       # SQLite database file (hidden)
-│
-├── templates/
-│   ├── add.html           # Template for adding a new password
-│   ├── edit.html          # Template for editing a password
-│   ├── index.html         # Main template for displaying passwords
-│   └── login.html         # Template for passphrase login
-│
-├── app.py                 # Main application script
-├── passphrase.txt         # File storing the passphrase and salt
-├── passguard.spec         # PyInstaller specification file
-├── requirements.txt       # Python dependencies
-└── README.md              # Project documentation
+```
+http://localhost:7777
 ```
 
-## API Endpoints
-### GET /
-Displays the main page with a list of stored passwords. Requires authentication via the passphrase.
+## Using the Executable
 
-### GET /login
-Displays the passphrase login page.
+1. **Download the Executable**
 
-### POST /login
-Authenticates the user using the provided passphrase.
+    Download the latest version of the executable from the [releases](https://github.com/instax-dutta/FlaskPasswordManagerApp/releases) section of the repository.
 
-### GET /logout
-Logs the user out by clearing the session.
+2. **Run the Executable**
 
-### POST /validate_passphrase
-Validates the passphrase provided in the request body. Returns a JSON response indicating whether the passphrase is valid.
+    Navigate to the directory where you downloaded the executable and run it:
 
-### GET /add
-Displays the page for adding a new password. Requires authentication.
+    ```sh
+    PassGuard.exe
+    ```
 
-### POST /add
-Adds a new password to the database. Requires authentication.
+    The application will start and you will see a popup message indicating that the password manager is running on `localhost:7777`.
 
-### GET /edit/<id>
-Displays the page for editing an existing password. Requires authentication.
+3. **Access the Application**
 
-### POST /edit/<id>
-Updates an existing password in the database. Requires authentication.
+    Open your web browser and go to:
 
-### GET /delete/<id>
-Deletes a password from the database. Requires authentication.
+    ```
+    http://localhost:7777
+    ```
 
-## Database Initialization
-The database is automatically initialized when the application starts if it does not already exist. The database file is stored in a hidden directory `.hidden/passwords.db`.
+## Usage
 
-## Security
-- **Encryption**: Passwords are encrypted using the `Fernet` symmetric encryption provided by the `cryptography` library.
-- **Passphrase**: A passphrase is required for accessing, adding, editing, or deleting passwords. The passphrase is stored securely in the `passphrase.txt` file.
-- **Hidden Directory**: Sensitive files, including the database, are stored in a hidden directory to prevent unauthorized access.
+- **Login**: Enter the passphrase to access the password manager.
+- **Add Password**: Click on "Add New Password" to add a new password entry.
+- **View Password**: Click the eye icon next to a password field and enter the passphrase to view the password. The password will be hidden again after 20 seconds.
+- **Edit Password**: Click "Edit" next to a password entry to edit its details.
+- **Delete Password**: Click "Delete" next to a password entry to delete it.
 
-## Future Enhancements
-- **Two-Factor Authentication**: Add an additional layer of security with 2FA.
-- **Password Strength Checker**: Implement a feature to check the strength of passwords being added.
-- **Backup and Restore**: Enable users to backup and restore their password data securely.
+## Passphrase Management
+
+- The passphrase is generated and stored in a file named `passphrase.txt` in the root directory of the project.
+- Ensure you keep this passphrase secure as it is used to encrypt and decrypt your passwords.
 
 ## Contributing
-Contributions are welcome! Please follow these steps to contribute:
-1. Fork the repository.
-2. Create a new branch with a descriptive name.
-3. Make your changes and commit them with clear messages.
-4. Push your changes to your fork.
-5. Submit a pull request with a detailed description of your changes.
+
+Contributions are welcome! Please open an issue or submit a pull request for any changes or improvements.
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
----
-
-For any questions or support, please contact [contact@sdad.pro].
-
-Happy Password Managing!
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

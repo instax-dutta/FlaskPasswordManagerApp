@@ -9,14 +9,20 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from base64 import urlsafe_b64encode
 from flask_session import Session
+import pymsgbox
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
+# Create a hidden directory for storing sensitive files
+hidden_dir = os.path.join(os.getcwd(), '.hidden')
+os.makedirs(hidden_dir, exist_ok=True)
+
 def get_db_connection():
-    conn = sqlite3.connect('passwords.db')
+    db_path = os.path.join(hidden_dir, 'passwords.db')
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -186,4 +192,5 @@ def delete(id):
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
+    pymsgbox.alert('PassGuard - By RacerOP is running on localhost:7777', 'Information')
     app.run(debug=True, port=7777)
